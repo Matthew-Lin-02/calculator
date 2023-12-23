@@ -9,14 +9,14 @@
 <body>
     <div class="calculator">
         <div class="display">
-            <p class="display-text">3.141592</p>
+            <p class="display-text">0</p>
         </div>
            
         <div class="input">
             <!-- row 1 -->
-            <div class="calculator-button special-function">C</div>
-            <div class="calculator-button special-function">+/-</div>
-            <div class="calculator-button special-function">%</div>
+            <div id = "clear" class="calculator-button special-function">AC</div>
+            <div id = "reverse-sign" class="calculator-button special-function">+/-</div>
+            <div id = "percentage" class="calculator-button special-function">%</div>
             <div class="calculator-button operator">/</div>
 
             <!-- row 2 -->
@@ -39,8 +39,8 @@
 
             <!-- row 5 -->
             <div id="fat" class="calculator-button digit fat"><p class="push-right">0</p></div>
-            <div class="calculator-button digit">.</div>
-            <div class="calculator-button operator">=</div>
+            <div id = "decimal" class="calculator-button">.</div>
+            <div id= "equals" class="calculator-button">=</div>
         </div>
     </div>
     <script src="script.js"></script>

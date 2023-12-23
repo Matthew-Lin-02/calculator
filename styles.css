@@ -1,13 +1,20 @@
+/* bg color of example #1c1c1c */
+/* --body-bg-color: #d3e3fd; */
 *{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 :root {
-    --body-bg-color: #d3e3fd;
-    --calculator-bg-color:#16181c;
-    --digit-bg-color:#404040;
-    --special-function-bg-color:#c8c8c8;
+    --body-bg-color: #1c1c1c;
+    --calculator-bg-color:#000000;
+    --digit-bg-color:#333333;
+    --special-function-bg-color:#a5a5a5;
+    --digit-operation-btn-text-color:#ffffff;
+    --operation-equals-btn-bg-color: #fe9f06;
+    --digit-hover-bg-color: #737373;
+    --operation-equals-btn-hover-bg-color: #fcc78d;
+    --special-function-hover-bg-color:#d9d9d9;
 }
 
 html{
@@ -41,10 +48,10 @@ body{
 
 .display-text{
     text-align: right;
-    top: 95px;
+    top: 90px;
     position:relative;
     font-size: 64px;
-    color: white;
+    color: var(--digit-operation-btn-text-color);
 }
 
 .input{
@@ -62,25 +69,37 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--digit-operation-btn-text-color);
     flex: 1 1 20%;
     font-size: 28px;
 }
 
-.digit{
-    background-color: var(--digit-bg-color);
-    color: white;
+.digit:hover, #decimal:hover{
+    background-color: var(--digit-hover-bg-color);
 }
 
-.operator{
-    background-color: orange;
-    color:white;
+.operator:hover, #equals:hover{
+    background-color: var(--operation-equals-btn-hover-bg-color);
+}
+
+
+.digit, #decimal{
+    background-color: var(--digit-bg-color);
+    color: var(--digit-operation-btn-text-color);
+}
+
+.operator, #equals{
+    background-color: var(--operation-equals-btn-bg-color);
+    color:var(--digit-operation-btn-text-color);
 }
 
 .special-function{
     background-color: var(--special-function-bg-color);
 }
 
+.special-function:hover{
+    background-color: var(--special-function-hover-bg-color);
+}
 #fat{
     border-radius: 36px; 
     flex: 0 1 154px;
@@ -89,3 +108,20 @@ body{
 .push-right{
     margin-right:80px
 }
+
+@keyframes dark-grey-button-clicked{
+    0%{
+        background-color: var(--digit-hover-bg-color);
+    }
+    100%{
+        background-color: var(--digit-bg-color);
+    }
+}
+
+.digit.mouseout,#decimal.mouseout{
+    animation: dark-grey-button-clicked 1s;
+}
+/* 
+.calculator-button:active{
+    animation: dark-grey-button-clicked 2s;
+} */
