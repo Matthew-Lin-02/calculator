@@ -109,7 +109,13 @@ body{
     margin-right:80px
 }
 
-@keyframes dark-grey-button-clicked{
+#selected-operator{
+    animation: none;
+    background-color: var(--digit-operation-btn-text-color);
+    color: var(--operation-equals-btn-bg-color);
+}
+
+@keyframes dark-grey-button-mouse-out{
     0%{
         background-color: var(--digit-hover-bg-color);
     }
@@ -118,10 +124,33 @@ body{
     }
 }
 
-.digit.mouseout,#decimal.mouseout{
-    animation: dark-grey-button-clicked 1s;
+@keyframes grey-button-mouse-out{
+    0%{
+        background-color: var(--special-function-hover-bg-color);
+    }
+    100%{
+        background-color: var(--special-function-bg-color);
+    }
 }
-/* 
-.calculator-button:active{
-    animation: dark-grey-button-clicked 2s;
-} */
+
+@keyframes orange-button-mouse-out{
+    0%{
+        background-color: var(--operation-equals-btn-hover-bg-color);
+    }
+    100%{
+        background-color: var(--operation-equals-btn-bg-color);
+    }
+}
+
+
+.digit.mouseout,#decimal.mouseout{
+    animation: dark-grey-button-mouse-out 0.4s ease-in ;
+}
+
+.special-function.mouseout{
+    animation: grey-button-mouse-out 0.4s ease-in;
+}
+
+.operator.mouseout, #equals.mouseout{
+    animation: orange-button-mouse-out 0.4s ease-in ;
+}

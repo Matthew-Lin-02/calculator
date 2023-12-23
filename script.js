@@ -19,9 +19,8 @@ window.addEventListener("keyup", (event) => {
     const keyName = event.key;
     if(keyName === "Backspace") clear();
     buttons.forEach((button) =>{
-        console.log(button.textContent);
+   
         if(button.textContent === keyName){
-            console.log('clicked1')
             button.click();
         } 
     });
@@ -52,7 +51,8 @@ function Calculator(){
         }
         a = Number(a);
         b = Number(b);
-        updateDisplay(this.methods[operator](a,b));
+        
+        updateDisplay(roundAccurately(this.methods[operator](a,b),15));
         updateNumbers()
         number2 = null;
     }
@@ -64,7 +64,7 @@ function updateNumbers(){
 }
 
 function handleDigitButtonClick(){
-
+    removeSelection();
     if(displayText.textContent === '0'){
      
         updateDisplay(this.textContent);
@@ -86,10 +86,10 @@ function handleDigitButtonClick(){
 }
 
 function handleEqualsButtonClick(){
+    removeSelection();
     if(globalOperator === ''){
         return -1;
     }
-
     calculator.operate(number2,number1,globalOperator);  
     newNumber = true;
     number2 = null;
@@ -101,11 +101,17 @@ function addDigitButtonEventListeners(){
     });
 }
 
+function removeSelection(){
+    operatorButtons.forEach((button)=>{
+        button.removeAttribute('id');
+    });
+}
 function addOperatorButtonEventListeners(){
     operatorButtons.forEach((button) => {
         button.addEventListener('click', ()=>{
- 
-           
+            removeSelection();
+            button.setAttribute('id','selected-operator');
+
             calculator.operate(number2,number1,globalOperator)
             globalOperator = button.textContent;
             newNumber = true;
@@ -115,6 +121,7 @@ function addOperatorButtonEventListeners(){
 }
 
 function clear(){
+    removeSelection();
     updateDisplay('0');
     number1 = 0;
     number2 = null;
@@ -133,16 +140,24 @@ function percentage(){
 }
 
 function decimal(){
-    if(displayText.textContent.includes(this.textContent)){
+    removeSelection();
+    if(displayText.textContent.includes(this.textContent) && !newNumber){
         return -1;
     }
-    updateDisplay(displayText.textContent + this.textContent); 
-    number1 = displayText.textContent;
-    newNumber = false;
-    return -1;
+
+    if(newNumber === true){
+        updateDisplay('0' + this.textContent); 
+        updateNumbers();
+        newNumber = false;
+    }else{
+        updateDisplay(displayText.textContent + this.textContent); 
+        number1 = displayText.textContent;
+
+    }
 }
 
 function updateDisplay(displayValue){
+
     displayValue = displayValue.toString();
     if(displayValue === "0"){
         clearButton.textContent = "AC";
@@ -158,14 +173,21 @@ function updateDisplay(displayValue){
 }
 
 function addMouseOutClass(){
- 
-
+    // if(this.classList.contains('mouseout')){
+    //     this.classList.remove('mouseout');
+    // }
+    // this.classList.add('mouseout');
     this.classList.add('mouseout');
+    
     const listener = this.addEventListener('animationend', function(){
         this.classList.remove('mouseout');
         this.removeEventListener('animationend', listener);
     });
 
+}
+
+function roundAccurately(num, places) {
+    return parseFloat(Math.round(num + 'e' + places) + 'e-' + places);
 }
 
 function addCalculatorEventListeners(){
@@ -176,14 +198,12 @@ function addCalculatorEventListeners(){
     reverseSignButton.addEventListener('click', reverseSign);
     percentageButton.addEventListener('click', percentage);
     decimalButton.addEventListener('click', decimal);
-    
+    buttons.forEach((button) =>{
+        button.addEventListener('mouseout', addMouseOutClass);
+        button.addEventListener('mouseover', function(){
+            this.classList.remove('mouseout');
+        })
+    })
 }
 
 addCalculatorEventListeners();
-
-buttons.forEach((button) =>{
-    button.addEventListener('mouseout', addMouseOutClass);
-    button.addEventListener('mouseover', function(){
-        this.classList.remove('mouseout');
-    })
-})
